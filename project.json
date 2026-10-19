@@ -1,0 +1,21 @@
+{
+  "overview": "A dark-mode personal finance tracker for mobile that records income and expenses by category, shows the available balance, and charts where the most money was spent.",
+  "features": [
+    "Register income and expenses with amount, category, date and note",
+    "Predefined categories including Comida, Transporte and Entretenimiento",
+    "Available balance summary with income and expense totals",
+    "Horizontal bar chart and progress bar highlighting the top spending category",
+    "Recent movements list with period and type filters",
+    "Dark interface with green and grey tones, responsive on mobile",
+    "Custom home-screen icon"
+  ],
+  "category": "finance-tracker",
+  "tags": [
+    "finance",
+    "personal-finance",
+    "budgeting",
+    "mobile",
+    "dark-mode"
+  ],
+  "last_updated": "2026-10-19T19:04:31.548Z"
+}

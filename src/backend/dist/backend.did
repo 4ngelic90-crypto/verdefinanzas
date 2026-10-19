@@ -1,0 +1,146 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TxType = 
+ variant {
+   expense;
+   income;
+ };
+type TransactionInput = 
+ record {
+   amount: nat;
+   category: Category;
+   date: Timestamp;
+   note: opt text;
+   txType: TxType;
+ };
+type TransactionId = nat;
+type Transaction = 
+ record {
+   amount: nat;
+   category: Category;
+   date: Timestamp;
+   id: TransactionId;
+   note: opt text;
+   txType: TxType;
+ };
+type Timestamp = nat;
+type Summary = 
+ record {
+   balance: int;
+   totalExpense: nat;
+   totalIncome: nat;
+   transactionCount: nat;
+ };
+type Result__1 = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Result_2 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result_1 = 
+ variant {
+   err: FinanceError;
+   ok;
+ };
+type Result = 
+ variant {
+   err: FinanceError;
+   ok: Transaction;
+ };
+type Period = 
+ variant {
+   all;
+   currentMonth;
+   previousMonth;
+ };
+type FinanceError = 
+ variant {
+   invalidAmount;
+   notAuthorized;
+   notFound: TransactionId;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type CategoryTotal = 
+ record {
+   category: Category;
+   isTop: bool;
+   percentage: nat;
+   total: nat;
+ };
+type Category = 
+ variant {
+   entertainment;
+   food;
+   health;
+   home;
+   other;
+   transport;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result_2);
+  _internet_identity_sign_in_start: () -> (blob);
+  /// Registers a new income or expense for the caller.
+  addTransaction: (input: TransactionInput) -> (Result);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Deletes a movement owned by the caller.
+  deleteTransaction: (id: TransactionId) -> (Result_1);
+  execute: (qJson: text) -> (Result__1) query;
+  /// Returns the backend API documentation as static Markdown.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Returns accumulated expense per category for the caller.
+  getCategoryTotals: (period: Period) -> (vec CategoryTotal) query;
+  /// Returns balance and totals for the caller over the given period.
+  getSummary: (period: Period) -> (Summary) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Lists the caller's movements, newest first.
+  listTransactions: (period: Period, txType: opt TxType) ->
+   (vec Transaction) query;
+  schema: () -> (text) query;
+  /// Updates an existing movement owned by the caller.
+  updateTransaction: (id: TransactionId, input: TransactionInput) -> (Result);
+}

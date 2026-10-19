@@ -1,0 +1,74 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type Category__436973244 = Category__936342486;
+type Category__936342486 =
+  {#entertainment; #food; #health; #home; #other; #transport};
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__470467278 =
+  {
+    accessControlState : AccessControlState__201339279;
+    counter : {var next : Nat};
+    transactions :
+      Map__230067015<Principal, Map__230067015<Nat, Transaction__571964390>>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__984632701 = {};
+type Timestamp__301639476 = Nat;
+type Timestamp__948113585 = Timestamp__301639476;
+type TransactionId__109595113 = TransactionId__138870153;
+type TransactionId__138870153 = Nat;
+type Transaction__367285679 =
+  {
+    amount : Nat;
+    category : Category__436973244;
+    date : Timestamp__948113585;
+    id : TransactionId__109595113;
+    note : ?Text;
+    txType : TxType__1025387634
+  };
+type Transaction__571964390 =
+  {
+    amount : Nat;
+    category : {#entertainment; #food; #health; #home; #other; #transport};
+    date : Nat;
+    id : Nat;
+    note : ?Text;
+    txType : {#expense; #income}
+  };
+type Transaction__924527296 = Transaction__367285679;
+type TxType__1025387634 = TxType__466529462;
+type TxType__466529462 = {#expense; #income};
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20261019_120000" : OldActor__984632701 -> NewActor__470467278
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable counter : {var next : TransactionId__138870153};
+  stable transactions :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<TransactionId__138870153,
+                                         Transaction__924527296>>;
+      var size : Nat__227979830
+    }
+};

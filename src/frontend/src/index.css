@@ -1,0 +1,153 @@
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 300 700;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "DM Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.75rem;
+
+    --background: 0.99 0 0;
+    --foreground: 0.15 0 0;
+    --card: 1.0 0 0;
+    --card-foreground: 0.15 0 0;
+    --popover: 1.0 0 0;
+    --popover-foreground: 0.15 0 0;
+
+    --primary: 0.35 0 0;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.95 0 0;
+    --secondary-foreground: 0.25 0 0;
+    --muted: 0.95 0 0;
+    --muted-foreground: 0.5 0 0;
+
+    --accent: 0.35 0 0;
+    --accent-foreground: 0.98 0 0;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.9 0 0;
+    --input: 0.9 0 0;
+    --ring: 0.35 0 0;
+
+    --chart-1: 0.65 0.22 40;
+    --chart-2: 0.6 0.12 185;
+    --chart-3: 0.4 0.07 227;
+    --chart-4: 0.83 0.19 84;
+    --chart-5: 0.77 0.19 70;
+
+    --sidebar: 0.98 0 0;
+    --sidebar-foreground: 0.15 0 0;
+    --sidebar-primary: 0.35 0 0;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.95 0 0;
+    --sidebar-accent-foreground: 0.25 0 0;
+    --sidebar-border: 0.9 0 0;
+    --sidebar-ring: 0.35 0 0;
+  }
+
+  .dark {
+    /* Ledger Green — dark-first. Deep neutral-cool grey base, botanical green accent. */
+    --background: 0.145 0.008 160;
+    --foreground: 0.95 0.006 150;
+    --card: 0.185 0.01 160;
+    --card-foreground: 0.95 0.006 150;
+    --popover: 0.21 0.012 160;
+    --popover-foreground: 0.95 0.006 150;
+
+    --primary: 0.78 0.19 152;
+    --primary-foreground: 0.16 0.02 152;
+
+    --secondary: 0.235 0.012 160;
+    --secondary-foreground: 0.85 0.008 150;
+    --muted: 0.235 0.012 160;
+    --muted-foreground: 0.62 0.014 155;
+
+    --accent: 0.78 0.19 152;
+    --accent-foreground: 0.16 0.02 152;
+
+    --destructive: 0.63 0.2 22;
+    --destructive-foreground: 0.97 0.01 22;
+
+    /* Semantic finance colors: income vs expense */
+    --income: 0.78 0.19 152;
+    --income-foreground: 0.16 0.02 152;
+    --expense: 0.63 0.2 22;
+    --expense-foreground: 0.97 0.01 22;
+
+    --border: 0.27 0.012 160;
+    --input: 0.29 0.012 160;
+    --ring: 0.78 0.19 152;
+
+    /* Category chart ramp: dominant green -> muted grey-green */
+    --chart-1: 0.78 0.19 152;
+    --chart-2: 0.68 0.14 158;
+    --chart-3: 0.58 0.1 162;
+    --chart-4: 0.5 0.07 165;
+    --chart-5: 0.42 0.045 165;
+
+    --sidebar: 0.17 0.009 160;
+    --sidebar-foreground: 0.95 0.006 150;
+    --sidebar-primary: 0.78 0.19 152;
+    --sidebar-primary-foreground: 0.16 0.02 152;
+    --sidebar-accent: 0.235 0.012 160;
+    --sidebar-accent-foreground: 0.85 0.008 150;
+    --sidebar-border: 0.27 0.012 160;
+    --sidebar-ring: 0.78 0.19 152;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Monospace tabular figures — every monetary amount aligns in a column. */
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Signature detail: soft green glow ring on the hero balance card. */
+  .balance-glow {
+    box-shadow: 0 0 0 1px oklch(var(--primary) / 0.28), 0 18px 48px -20px
+      oklch(var(--primary) / 0.4);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
